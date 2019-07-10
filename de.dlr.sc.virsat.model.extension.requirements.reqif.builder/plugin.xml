@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         id="de.dlr.sc.virsat.model.extension.requirements.reqif.builder.ReqIFBuilder"
+         name="VirSat Model Extension Requirements ReqIF Builder"
+         point="org.eclipse.core.resources.builders">
+      <builder
+            callOnEmptyDelta="true"
+            hasNature="true">
+         <run
+               class="de.dlr.sc.virsat.model.extension.requirements.reqif.builder.ReqIFBuilder">
+         </run>
+         </builder>
+   </extension>
+   <extension id="de.dlr.sc.virsat.model.extension.requirements.reqif.builder.ReqIFNature" name="VirSat Model Extension Requirements ReqIF Nature" point="org.eclipse.core.resources.natures">
+		<runtime>
+		<run class="de.dlr.sc.virsat.model.extension.requirements.reqif.builder.ReqIFNature" />
+	</runtime>
+	<builder id="de.dlr.sc.virsat.model.extension.requirements.reqif.builder.ReqIFBuilder"/>
+   </extension>
+</plugin>

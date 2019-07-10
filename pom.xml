@@ -135,6 +135,9 @@
 				<module>de.dlr.sc.virsat.model.extension.requirements.feature</module>
 				<module>de.dlr.sc.virsat.model.extension.requirements.test</module>
 				<module>de.dlr.sc.virsat.model.extension.requirements.ui</module>
+				
+				<module>de.dlr.sc.virsat.model.extension.requirements.reqif.builder</module>
+				<module>de.dlr.sc.virsat.model.extension.requirements.reqif.test</module>
 
 				<!-- The Extension for Common EGS-CC based Product Structure -->
 				<module>de.dlr.sc.virsat.model.extension.ps</module>
