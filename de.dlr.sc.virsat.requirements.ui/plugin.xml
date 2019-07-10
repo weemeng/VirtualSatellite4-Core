@@ -6,7 +6,7 @@
             class="org.eclipse.rmf.reqif10.pror.editor.presentation.Reqif10Editor"
             contributorClass="org.eclipse.rmf.reqif10.pror.editor.presentation.Reqif10ActionBarContributor"
             default="true"
-            icon="resources/images/Requirements16.gif"
+            icon="resources/images/RequirementsIconReqIF16.gif"
             extensions="reqif"
             id="org.eclipse.rmf.reqif10.presentation.Reqif10EditorID"
             name="%_UI_Reqif10Editor_label">
