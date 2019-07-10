@@ -8,5 +8,6 @@ Automatic-Module-Name: de.dlr.sc.virsat.model.extension.requirements.reqif.build
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: German Aerospace Center (DLR)
 Require-Bundle: org.junit,
- de.dlr.sc.virsat.project
+ de.dlr.sc.virsat.project,
+ de.dlr.sc.virsat.model
 Import-Package: de.dlr.sc.virsat.project.test
