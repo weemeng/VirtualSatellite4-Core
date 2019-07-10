@@ -7,3 +7,6 @@ Fragment-Host: de.dlr.sc.virsat.model.extension.requirements.reqif.builder;bundl
 Automatic-Module-Name: de.dlr.sc.virsat.model.extension.requirements.reqif.builder.test
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: German Aerospace Center (DLR)
+Require-Bundle: org.junit,
+ de.dlr.sc.virsat.project
+Import-Package: de.dlr.sc.virsat.project.test
