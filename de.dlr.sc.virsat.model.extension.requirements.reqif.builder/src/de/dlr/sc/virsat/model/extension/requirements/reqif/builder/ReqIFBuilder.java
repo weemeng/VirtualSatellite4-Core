@@ -160,7 +160,7 @@ public class ReqIFBuilder extends IncrementalProjectBuilder {
 				//Load or create resource
 				Resource reqIFResource;
 				if (externalResourceSet.getURIConverter().exists(reqIFUri, Collections.EMPTY_MAP)) {
-					reqIFResource = externalResourceSet.getResource(reqIFUri, false);
+					reqIFResource = externalResourceSet.getResource(reqIFUri, true);
 					if (ReqIFBuilderUtil.isReqIFModel(reqIFResource)) {
 						transformer.updateReqIFModel(reqIFResource, specification);
 					} else {
