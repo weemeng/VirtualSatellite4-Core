@@ -19,4 +19,8 @@
 	</runtime>
 	<builder id="de.dlr.sc.virsat.model.extension.requirements.reqif.builder.ReqIFBuilder"/>
    </extension>
+   <extension point="org.eclipse.emf.transaction.editingDomains">
+     <editingDomain
+           id="de.dlr.sc.virsat.model.extension.requirements.reqif.builder.ReqIFEditingDomain"/>
+     </extension>
 </plugin>
