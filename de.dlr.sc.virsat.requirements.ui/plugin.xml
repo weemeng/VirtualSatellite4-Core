@@ -9,7 +9,7 @@
             icon="resources/images/RequirementsIconReqIF16.gif"
             extensions="reqif"
             id="org.eclipse.rmf.reqif10.presentation.Reqif10EditorID"
-            name="%_UI_Reqif10Editor_label">
+            name="ReqIF Editor">
       </editor>
    </extension>
 </plugin>
