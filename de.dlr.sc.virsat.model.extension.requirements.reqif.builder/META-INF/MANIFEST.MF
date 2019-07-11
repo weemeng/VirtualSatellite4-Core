@@ -14,5 +14,7 @@ Require-Bundle: org.eclipse.core.runtime,
  de.dlr.sc.virsat.requirements,
  de.dlr.sc.virsat.project,
  de.dlr.sc.virsat.model,
- de.dlr.sc.virsat.model.extension.requirements
+ de.dlr.sc.virsat.model.extension.requirements,
+ de.dlr.sc.virsat.model.edit
 Export-Package: de.dlr.sc.virsat.model.extension.requirements.reqif.builder
+Import-Package: de.dlr.sc.virsat.model.concept.list

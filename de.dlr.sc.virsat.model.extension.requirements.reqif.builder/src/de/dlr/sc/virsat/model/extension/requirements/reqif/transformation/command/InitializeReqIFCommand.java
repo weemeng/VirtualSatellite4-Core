@@ -42,7 +42,7 @@ public class InitializeReqIFCommand extends RecordingCommand {
 		super(domain);
 		this.resource = resource;
 		this.specification = specification;
-		this.builder = new ReqIFModelBuilder();
+		this.builder = new ReqIFModelBuilder(null);
 	}
 
 	/* (non-Javadoc)
@@ -52,6 +52,7 @@ public class InitializeReqIFCommand extends RecordingCommand {
 	protected void doExecute() {
 		ReqIF modelRoot = ReqIF10Factory.eINSTANCE.createReqIF();
 		modelRoot.setTheHeader(builder.createHeader(specification));
+		modelRoot.setCoreContent(builder.createContent(specification));
 		resource.getContents().add(modelRoot);
 	}
 

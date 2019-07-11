@@ -77,6 +77,14 @@ public class ReqIFBuilderUtil {
 	public static boolean isReqIFModel(Resource resource) {
 		boolean isModel = false;
 		
+		if (resource == null) {
+			return false;
+		}
+		
+		if (resource.getAllContents() == null) {
+			return false;
+		}
+		
 		if (resource.getContents().size() > 0) {
 			if (resource.getContents().get(0) instanceof ReqIF) {
 				isModel = true;
