@@ -55,16 +55,7 @@ public class RequirementsTransformer {
 
 		Command initCommand = new InitializeReqIFCommand(editingDomain, resource, specification);
 		editingDomain.getCommandStack().execute(initCommand);
-		ReqIF modelRoot = (ReqIF) resource.getContents().get(0);
-		Command updateCommand = new UpdateReqIFContentCommand(editingDomain, ((ReqIF) modelRoot).getCoreContent(),
-				specification);
-		editingDomain.getCommandStack().execute(updateCommand);
-		try {
-			resource.save(Collections.EMPTY_MAP);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		updateReqIFModel(resource, specification);
 	}
 
 	/**
@@ -83,8 +74,13 @@ public class RequirementsTransformer {
 						specification);
 				editingDomain.getCommandStack().execute(updateCommand);
 			}
-
 		}
-
+		try {
+			resource.save(Collections.EMPTY_MAP);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }
