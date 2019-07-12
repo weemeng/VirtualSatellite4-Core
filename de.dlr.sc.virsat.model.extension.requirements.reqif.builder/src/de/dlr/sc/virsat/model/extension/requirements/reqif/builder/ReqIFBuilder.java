@@ -24,7 +24,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 
 import de.dlr.sc.virsat.model.dvlm.Repository;
@@ -63,7 +62,7 @@ public class ReqIFBuilder extends IncrementalProjectBuilder {
 		
 		virSatTed = VirSatEditingDomainRegistry.INSTANCE.getEd(getProject());
 		if (virSatTed == null) {
-			virSatTed = VirSatEditingDomainRegistry.INSTANCE.createEd(getProject(), new ResourceSetImpl());
+			return null;
 		}
 		externalEditingDomain = TransactionalEditingDomain.Registry.INSTANCE.getEditingDomain(EDITING_DOMAIN_ID);
 		externalReqIFResourceSet = externalEditingDomain.getResourceSet();
