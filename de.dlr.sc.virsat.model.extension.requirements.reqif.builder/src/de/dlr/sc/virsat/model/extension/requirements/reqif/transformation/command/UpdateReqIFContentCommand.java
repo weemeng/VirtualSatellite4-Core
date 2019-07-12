@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.rmf.reqif10.AttributeDefinition;
@@ -25,8 +26,6 @@ import org.eclipse.rmf.reqif10.ReqIFContent;
 import org.eclipse.rmf.reqif10.SpecObject;
 import org.eclipse.rmf.reqif10.SpecObjectType;
 import org.eclipse.rmf.reqif10.SpecType;
-import org.eclipse.rmf.reqif10.Specification;
-import org.eclipse.rmf.reqif10.SpecificationType;
 
 import de.dlr.sc.virsat.model.extension.requirements.model.AttributeValue;
 import de.dlr.sc.virsat.model.extension.requirements.model.Requirement;
@@ -82,11 +81,10 @@ public class UpdateReqIFContentCommand extends RecordingCommand implements IType
 	@Override
 	protected void doExecute() {
 		//Update the object types
+		content.getSpecTypes().clear();
 		for (RequirementType type : reqTypeList) {
 			SpecType specType = (SpecType) getElementById(type.getUuid());
-			if (content.getSpecTypes().contains(specType)) {
-				content.getSpecTypes().remove(specType);
-			}
+			removeOldObject(specType.getIdentifier());
 			content.getSpecTypes().add(specType);
 			
 			for (RequirementAttribute attType : type.getAttributes()) {
@@ -95,12 +93,11 @@ public class UpdateReqIFContentCommand extends RecordingCommand implements IType
 			}
 		}
 		//Update the objects itself
+		content.getSpecObjects().clear();
 		for (Requirement req : reqList) {
 			SpecObject object = reqIFModelBuilder.createSpecObject(req);
 			
-			if (content.getSpecObjects().contains(object)) {
-				content.getSpecObjects().remove(object);
-			}
+			removeOldObject(object.getIdentifier());
 			content.getSpecObjects().add(object);
 			
 			for (AttributeValue attValue : req.getElements()) {
@@ -108,14 +105,7 @@ public class UpdateReqIFContentCommand extends RecordingCommand implements IType
 				object.getValues().add(value);
 			}
 		}
-		//Update the specification hierarchy
-		SpecificationType specificationType = reqIFModelBuilder.createSpecificationType(specification);
-		Specification specificationReqIF = reqIFModelBuilder.createSpecification(specification);
-		specificationReqIF.setType(specificationType);
-		content.getSpecTypes().add(specificationType);
-		content.getSpecifications().add(specificationReqIF);
-		
-		
+
 	}
 
 	/**
@@ -148,6 +138,17 @@ public class UpdateReqIFContentCommand extends RecordingCommand implements IType
 		}
 	}
 
+	/**
+	 * Remove the old content with the same id
+	 * @param id the id of the element to be updated
+	 */
+	protected void removeOldObject(String id) {
+		EObject oldObject = content.eResource().getEObject(id);
+		if (oldObject != null) {
+			EcoreUtil.remove(oldObject);
+		}
+	}
+	
 	/* (non-Javadoc)
 	 * @see de.dlr.sc.virsat.model.extension.requirements.reqif.transformation.ITypeElementProvider#getElementById(java.lang.String)
 	 */
