@@ -40,14 +40,7 @@ public class ReqIFBuilderUtil {
 	 */
 	public static String getReqIFFilenameFromSpecification(CategoryAssignment ca) {
 		
-		RequirementsSpecification specification = new RequirementsSpecification(ca);
-		
-		String reqIFFileName = null;
-		if (specification.getFileName() != null && !specification.getFileName().equals("")) {
-			reqIFFileName = specification.getFileName();
-		} else {
-			reqIFFileName = ca.getName();
-		}
+		String reqIFFileName = ca.getName();
 		
 		if (!reqIFFileName.contains(".")) {
 			reqIFFileName += "." + ReqIFUtil.REQ_IF_FILE_EXTENSION;
@@ -63,9 +56,18 @@ public class ReqIFBuilderUtil {
 	 * @return the new URI
 	 */
 	public static URI getReqIFUriFromDVLMModelSpecification(CategoryAssignment ca) {
-		URI uri = ca.eResource().getURI().trimSegments(1);
-		URI newUri = uri.appendSegment("documents");
-		return newUri.appendSegment(getReqIFFilenameFromSpecification(ca));
+		URI reqIFURI = null;
+		
+		RequirementsSpecification specification = new RequirementsSpecification(ca);
+		if (specification.getExportFile() != null) {
+			reqIFURI = specification.getExportFile();
+		} else {
+			reqIFURI = ca.eResource().getURI().trimSegments(1);
+			reqIFURI = reqIFURI.appendSegment("documents");
+			reqIFURI = reqIFURI.appendSegment(getReqIFFilenameFromSpecification(ca));
+		}
+		
+		return reqIFURI;
 	}
 	
 	

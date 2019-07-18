@@ -30,9 +30,9 @@ import org.junit.Test;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoriesFactory;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.categories.propertydefinitions.PropertydefinitionsFactory;
-import de.dlr.sc.virsat.model.dvlm.categories.propertydefinitions.StringProperty;
+import de.dlr.sc.virsat.model.dvlm.categories.propertydefinitions.ResourceProperty;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.PropertyinstancesFactory;
-import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ValuePropertyInstance;
+import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.ResourcePropertyInstance;
 import de.dlr.sc.virsat.model.extension.requirements.model.RequirementsSpecification;
 import de.dlr.sc.virsat.project.resources.VirSatResourceSet;
 import de.dlr.sc.virsat.project.test.AProjectTestCase;
@@ -45,19 +45,20 @@ public class ReqIFBuilderUtilTest extends AProjectTestCase {
 
 	VirSatResourceSet resSetRepository;
 	protected static final String TEST_MODEL = "data/sadsadasf34fg.dvlm";
-	protected static final String TEST_REQIF_FILE = "data/documents/TestFileName.reqif";
+	protected static final String TEST_REQIF_FILE = "data/documents/TestSpec.reqif";
+	protected static final String TEST_REQIF_FILE_CUSTOM = "data/documents/TestFileName.reqif";
 
 	protected static final String TEST_SPEC_NAME = "TestSpec";
 	protected static final String TEST_FILE_NAME = "TestFileName";
 
 	protected static final String TEST_SPEC_NAME_EXPECTED = "TestSpec.reqif";
-	protected static final String TEST_FILE_NAME_EXPECTED = "TestFileName.reqif";
 
 	protected IFile testFile;
 	protected IFile expectedReqIFFile;
+	protected IFile expectedReqIFFileCustomURI;
 	protected Resource testFileResource;
 	CategoryAssignment testCA;
-	ValuePropertyInstance pInstance;
+	ResourcePropertyInstance pInstance;
 
 	/**
 	 * @throws CoreException
@@ -70,6 +71,7 @@ public class ReqIFBuilderUtilTest extends AProjectTestCase {
 
 		testFile = testProject.getFile(TEST_MODEL);
 		expectedReqIFFile = testProject.getFile(TEST_REQIF_FILE);
+		expectedReqIFFileCustomURI = testProject.getFile(TEST_REQIF_FILE_CUSTOM);
 
 		testFileResource = resSetRepository
 				.createResource(URI.createPlatformResourceURI(testFile.getFullPath().toString(), true));
@@ -79,9 +81,9 @@ public class ReqIFBuilderUtilTest extends AProjectTestCase {
 			@Override
 			protected void doExecute() {
 				testCA = CategoriesFactory.eINSTANCE.createCategoryAssignment();
-				StringProperty propFilename = PropertydefinitionsFactory.eINSTANCE.createStringProperty();
-				propFilename.setName(RequirementsSpecification.PROPERTY_FILENAME);
-				pInstance = PropertyinstancesFactory.eINSTANCE.createValuePropertyInstance();
+				ResourceProperty propFilename = PropertydefinitionsFactory.eINSTANCE.createResourceProperty();
+				propFilename.setName(RequirementsSpecification.PROPERTY_EXPORTFILE);
+				pInstance = PropertyinstancesFactory.eINSTANCE.createResourcePropertyInstance();
 				pInstance.setType(propFilename);
 				testCA.getPropertyInstances().add(pInstance);
 				testCA.setName(TEST_SPEC_NAME);
@@ -122,15 +124,6 @@ public class ReqIFBuilderUtilTest extends AProjectTestCase {
 		assertEquals("Wrong filename of model without filename definition", TEST_SPEC_NAME_EXPECTED,
 				ReqIFBuilderUtil.getReqIFFilenameFromSpecification(testCA));
 
-		editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
-			@Override
-			protected void doExecute() {
-				pInstance.setValue(TEST_FILE_NAME);
-			}
-		});
-		assertEquals("Wrong filename of model with filename definition", TEST_FILE_NAME_EXPECTED,
-				ReqIFBuilderUtil.getReqIFFilenameFromSpecification(testCA));
-
 	}
 
 	/**
@@ -140,17 +133,24 @@ public class ReqIFBuilderUtilTest extends AProjectTestCase {
 	@Test
 	public void testGetReqIFUriFromDVLMModelSpecification() {
 
+		URI resultURI = ReqIFBuilderUtil.getReqIFUriFromDVLMModelSpecification(testCA);
+
+		assertEquals("URI is not derived from element name",
+				URI.createPlatformResourceURI(expectedReqIFFile.getFullPath().toString(), true), resultURI);
+		
 		editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
 			@Override
 			protected void doExecute() {
-				pInstance.setValue(TEST_FILE_NAME);
+				pInstance.setResourceUri(URI.createFileURI(expectedReqIFFileCustomURI.getFullPath().toString()).toString());
 			}
 		});
 
-		URI resultURI = ReqIFBuilderUtil.getReqIFUriFromDVLMModelSpecification(testCA);
+		URI resultURIcustom = ReqIFBuilderUtil.getReqIFUriFromDVLMModelSpecification(testCA);
+		
+		URI expectedURI = URI.createPlatformResourceURI(expectedReqIFFileCustomURI.getFullPath().toString(), true);
 
-		assertEquals("URIs are not the same",
-				URI.createPlatformResourceURI(expectedReqIFFile.getFullPath().toString(), true), resultURI);
+		assertEquals("Did not use specified URI!",
+			expectedURI, resultURIcustom);
 	}
 
 	/**
