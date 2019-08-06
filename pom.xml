@@ -131,6 +131,11 @@
 				<module>de.dlr.sc.virsat.model.extension.mechanical.ui</module>
 				<module>de.dlr.sc.virsat.model.extension.mechanical.feature</module>
 
+				<module>de.dlr.sc.virsat.requirements</module>
+				<module>de.dlr.sc.virsat.requirements.ui</module>
+				<module>de.dlr.sc.virsat.requirements.test</module>
+				<module>de.dlr.sc.virsat.requirements.feature</module>
+
 				<module>de.dlr.sc.virsat.model.extension.requirements</module>
 				<module>de.dlr.sc.virsat.model.extension.requirements.feature</module>
 				<module>de.dlr.sc.virsat.model.extension.requirements.test</module>

@@ -113,6 +113,7 @@ Germany
       <feature id="org.eclipse.draw2d"/>
       <feature id="de.dlr.sc.virsat.model.extension.mechanical.feature"/>
       <feature id="de.dlr.sc.virsat.model.extension.requirements.feature"/>
+      <feature id="de.dlr.sc.virsat.requirements.ui.feature"/>
    </features>
 
    <configurations>

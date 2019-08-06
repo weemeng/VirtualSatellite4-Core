@@ -13,8 +13,7 @@ Simulation and Software Technology
    </description>
 
    <copyright>
-      Copyright 2015
-
+      Copyright 2019
 by German Aerospace Center (DLR e.V.)
    </copyright>
 
@@ -234,6 +233,14 @@ by German Aerospace Center (DLR e.V.)
 
    <plugin
          id="de.dlr.sc.virsat.model.extension.requirements.test"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="de.dlr.sc.virsat.requirements.test"
          download-size="0"
          install-size="0"
          version="0.0.0"
