@@ -66,9 +66,26 @@ public class ModelAPI {
 	}
 	
 	/**
+	 * Constructor for the API that automatically loads the DVLM model
+	 * @param projectPath path of current project
+	 * @throws CoreException 
+	 */
+	public ModelAPI(String projectPath) {
+		initialize(projectPath);
+	}
+	
+	/**
 	 * This method uses the plain java api to load the resource and resourceset from the file system
 	 */
 	protected void initialize() {
+		initialize(getCurrentProjectAbsolutePath());
+	}
+	
+	/**
+	 * This method uses the plain java api to load the resource and resourceset from the file system
+	 * @param projectPath path of current project
+	 */
+	protected void initialize(String projectPath) {
 		resourceSet = new ResourceSetImpl();
 		
 		// Setting up the resources factory to deal with the model extension
@@ -84,7 +101,7 @@ public class ModelAPI {
 	    });
 	    System.out.println("---------------- App output: --------------");
 	    
-	    String resourceFullPath = Paths.get(getCurrentProjectAbsolutePath(), VirSatProjectCommons.FOLDERNAME_DATA + "/" + VirSatProjectCommons.FILENAME_REPOSITORY).toAbsolutePath().toString();
+	    String resourceFullPath = Paths.get(projectPath, VirSatProjectCommons.FOLDERNAME_DATA + "/" + VirSatProjectCommons.FILENAME_REPOSITORY).toAbsolutePath().toString();
 	    URI modelUri = URI.createFileURI(resourceFullPath);
 	    
 	    resource = resourceSet.getResource(modelUri, true);

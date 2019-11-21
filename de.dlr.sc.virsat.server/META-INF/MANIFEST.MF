@@ -18,7 +18,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.slf4j.api,
  org.apache.commons.io,
  org.bouncycastle.bcpg,
- org.bouncycastle.bcprov
+ org.bouncycastle.bcprov,
+ de.dlr.sc.virsat.apps
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Eclipse-ExtensibleAPI: true
