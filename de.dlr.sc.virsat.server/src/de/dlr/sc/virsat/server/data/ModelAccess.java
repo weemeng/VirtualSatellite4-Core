@@ -17,6 +17,7 @@ import com.github.cliftonlabs.json_simple.JsonArray;
 import com.github.cliftonlabs.json_simple.JsonObject;
 
 import de.dlr.sc.virsat.apps.api.external.ModelAPI;
+import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
 import de.dlr.sc.virsat.model.concept.types.structural.ABeanStructuralElementInstance;
 import de.dlr.sc.virsat.model.concept.types.structural.IBeanStructuralElementInstance;
 
@@ -69,6 +70,31 @@ public class ModelAccess {
 			beanSei = modelAPI.findBeanSeiByUuid(uuid);
 			if (beanSei != null) {
 				result = beanSei.toJson().toJson();
+			}
+		} catch (CoreException e) {
+			result = e.getMessage();
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * Gets the {@link IBeanCategoryAssignment} from the given UUID and converts it to a json structure, which is then
+	 * returned.
+	 * @param projectdirectory the directory of the local VirSat project (for context)
+	 * @param uuid the UUID for which the {@link IBeanCategoryAssignment} is wanted
+	 * @return json string of the {@link IBeanCategoryAssignment} that belongs to the given UUID
+	 */
+	public String showBeanCAFromUuid(String projectdirectory, String uuid) {
+		String result = "null";
+		
+		ModelAPI modelAPI = new ModelAPI(projectdirectory);
+		IBeanCategoryAssignment beanCA;
+		try {
+			beanCA = modelAPI.findBeanCAByUuid(uuid);
+			if (beanCA != null) {
+				result = beanCA.toJson().toJson();
 			}
 		} catch (CoreException e) {
 			result = e.getMessage();

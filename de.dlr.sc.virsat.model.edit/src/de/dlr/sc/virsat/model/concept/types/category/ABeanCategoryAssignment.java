@@ -9,11 +9,16 @@
  *******************************************************************************/
 package de.dlr.sc.virsat.model.concept.types.category;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+
+import com.github.cliftonlabs.json_simple.JsonObject;
 
 import de.dlr.sc.virsat.model.concept.types.ABeanObject;
 import de.dlr.sc.virsat.model.concept.types.factory.BeanStructuralElementInstanceFactory;
@@ -24,9 +29,11 @@ import de.dlr.sc.virsat.model.concept.types.util.BeanStructuralElementInstanceHe
 import de.dlr.sc.virsat.model.dvlm.categories.ATypeDefinition;
 import de.dlr.sc.virsat.model.dvlm.categories.ATypeInstance;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
+import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.APropertyInstance;
 import de.dlr.sc.virsat.model.dvlm.categories.util.CategoryAssignmentHelper;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.dvlm.general.GeneralPackage;
+import de.dlr.sc.virsat.model.dvlm.general.IUuid;
 import de.dlr.sc.virsat.model.dvlm.structural.StructuralElementInstance;
 import de.dlr.sc.virsat.model.dvlm.structural.command.DeleteStructuralElementInstanceCommand;
 import de.dlr.sc.virsat.model.ecore.VirSatEcoreUtil;
@@ -173,4 +180,35 @@ public abstract class ABeanCategoryAssignment extends ABeanObject<CategoryAssign
 	public Command delete(EditingDomain ed) {
 		return DeleteStructuralElementInstanceCommand.create(ed, ti);
 	}
+	
+	@Override
+	public JsonObject toJson() {
+		JsonObject obj = new JsonObject();
+		obj.put("uuid", getUuid());
+		obj.put("name", getName());
+		obj.put("type", ti.getType().getFullQualifiedName());
+		String parentUuid = "null";
+		if (getTypeInstance().eContainer() instanceof IUuid) {
+			parentUuid = ((IUuid) getTypeInstance().eContainer()).getUuid().toString();
+		}
+		obj.put("parent", parentUuid);
+		obj.put("propertyInstances", collectPropertyInstanceUuids());
+		return obj;
+	}
+	
+	private List<String> collectPropertyInstanceUuids() {
+		List<String> uuids = new ArrayList<String>();
+		for (APropertyInstance propertyInstance : ti.getPropertyInstances()) {
+			uuids.add(propertyInstance.getUuid().toString());
+		}
+		return uuids;
+	}
+	
+//	private List<APropertyInstance> collectPropertyInstances() {
+//		CategoryAssignmentHelper helper = new CategoryAssignmentHelper(ti);
+//		Category cat = (Category) ti.getType();
+//		List<String> propertyNames = cat.getProperties().stream().map(ATypeDefinition::getName).collect(Collectors.toList());
+//		List<APropertyInstance> beanProperties = propertyNames.stream().map((propertyName) -> helper.getPropertyInstance(propertyName)).collect(Collectors.toList());
+//		return Collections.unmodifiableList(beanProperties);
+//	}
 }

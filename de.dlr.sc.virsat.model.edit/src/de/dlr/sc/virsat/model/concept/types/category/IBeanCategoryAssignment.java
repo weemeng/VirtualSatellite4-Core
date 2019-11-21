@@ -9,6 +9,8 @@
  *******************************************************************************/
 package de.dlr.sc.virsat.model.concept.types.category;
 
+import com.github.cliftonlabs.json_simple.JsonObject;
+
 import de.dlr.sc.virsat.model.concept.types.IBeanDelete;
 import de.dlr.sc.virsat.model.concept.types.IBeanName;
 import de.dlr.sc.virsat.model.concept.types.IBeanObject;
@@ -29,4 +31,10 @@ public interface IBeanCategoryAssignment extends IBeanObject<CategoryAssignment>
 	 */
 	String getFullQualifiedCategoryName();
 
+	
+	/**
+	 * Converts the content of the instance to json, similar to the {@link #toString()} method.
+	 * @return Content of instance as json object
+	 */
+	JsonObject toJson();
 }

@@ -28,7 +28,14 @@ public class ModelAccessResource {
 	@GET
 	@Path("/sei")
 	public String showStructuralElementImplementation(@QueryParam("projectdirectory") String projectdirectory,
-													@QueryParam("uuid") String uuid) {
+													  @QueryParam("uuid") String uuid) {
 		return ModelAccess.getInstance().showBeanSeiFromUuid(projectdirectory, uuid);
+	}
+	
+	@GET
+	@Path("/ca")
+	public String showCategoryAssignment(@QueryParam("projectdirectory") String projectdirectory,
+										 @QueryParam("uuid") String uuid) {
+		return ModelAccess.getInstance().showBeanCAFromUuid(projectdirectory, uuid);
 	}	
 }
