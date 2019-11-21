@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: EPL-2.0
  *******************************************************************************/
 
-package de.dlr.sc.virsat.server;
+package de.dlr.sc.virsat.server.servlet;
 
 import javax.servlet.Servlet;
 
@@ -16,8 +16,6 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
 import de.dlr.sc.virsat.server.resources.AccessTestResource;
-import de.dlr.sc.virsat.server.resources.ModelAccessResource;
-import de.dlr.sc.virsat.server.resources.WorkspaceAccessResource;
 import de.dlr.virsat.external.lib.jersey.servlet.ApplicationServletContainer;
 
 public class VirSatModelAccessServlet extends ApplicationServletContainer implements Servlet {
