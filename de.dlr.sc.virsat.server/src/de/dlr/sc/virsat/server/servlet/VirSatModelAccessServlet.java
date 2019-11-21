@@ -20,6 +20,10 @@ import de.dlr.sc.virsat.server.resources.ModelAccessResource;
 import de.dlr.sc.virsat.server.resources.WorkspaceAccessResource;
 import de.dlr.virsat.external.lib.jersey.servlet.ApplicationServletContainer;
 
+/**
+ * This servlet registers the classes that should be provided as REST resources.
+ *
+ */
 public class VirSatModelAccessServlet extends ApplicationServletContainer implements Servlet {
 	
 	@Override
@@ -28,7 +32,6 @@ public class VirSatModelAccessServlet extends ApplicationServletContainer implem
 		return new ServletContainer(resourceConfig);
 	}
 
-	// @ApplicationPath(CONTEXT_PATH)
 	private class ModelAccessRestApplication extends ResourceConfig {
 		private ModelAccessRestApplication() {
 			register(AccessTestResource.class);
