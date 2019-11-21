@@ -15,6 +15,8 @@ import java.util.Set;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
+import com.github.cliftonlabs.json_simple.JsonObject;
+
 import de.dlr.sc.virsat.model.concept.types.IBeanDelete;
 import de.dlr.sc.virsat.model.concept.types.IBeanName;
 import de.dlr.sc.virsat.model.concept.types.IBeanUuid;
@@ -243,4 +245,10 @@ public interface IBeanStructuralElementInstance extends IBeanUuid, IBeanDelete, 
 	 * @return true if this SEI is of SE that can be on root level
 	 */
 	boolean canBeRoot();
+	
+	/**
+	 * Converts the content of the instance to json, similar to the {@link #toString()} method.
+	 * @return Content of instance as json object
+	 */
+	JsonObject toJson();
 }

@@ -22,14 +22,18 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
+import de.dlr.sc.virsat.model.concept.types.factory.BeanStructuralElementInstanceFactory;
 import de.dlr.sc.virsat.model.concept.types.structural.IBeanStructuralElementInstance;
 import de.dlr.sc.virsat.model.concept.types.util.BeanStructuralElementInstanceHelper;
 import de.dlr.sc.virsat.model.dvlm.DVLMPackage;
@@ -249,7 +253,7 @@ public class ModelAPI {
 	    
 	    List<Discipline> disciplines = getRepository().getRoleManagement().getDisciplines();
 	    String userName = System.getProperty("user.name");
-	    
+
 	    Discipline foundDiscipline = null;
 	    for (Discipline discipline : disciplines) {
 	    	if (discipline.getUser().equals(userName)) {
@@ -335,5 +339,25 @@ public class ModelAPI {
 	public <SEI_TYPE extends IBeanStructuralElementInstance> List<SEI_TYPE> getRootSeis(Class<SEI_TYPE> beanSeiClazz) {
 		BeanStructuralElementInstanceHelper bseiHelper = new BeanStructuralElementInstanceHelper();
 		return bseiHelper.wrapAllBeanSeisOfType(getRepository().getRootEntities(), beanSeiClazz);
+	}
+	
+	/**
+	 * Find a BeanStructuralElementInstance from the given UUID.
+	 * @param uuid UUID of the BeanSei that is wanted
+	 * @return BeanSei with the given UUID; null if none was found
+	 * @throws CoreException 
+	 */
+	public IBeanStructuralElementInstance findBeanSeiByUuid(String uuid) throws CoreException {
+		List<StructuralElementInstance> rootSeis = getRepository().getRootEntities();
+		TreeIterator<Object> iterator = EcoreUtil.getAllContents(rootSeis, true);
+		while (iterator.hasNext()) {
+			Object currentSei = iterator.next();
+			if (currentSei instanceof StructuralElementInstance) {
+				if (((StructuralElementInstance) currentSei).getUuid().toString().equals(uuid)) {
+					return (new BeanStructuralElementInstanceFactory()).getInstanceFor((StructuralElementInstance) currentSei);
+				}
+			}
+		}
+		return null;
 	}
 }

@@ -9,6 +9,7 @@
  *******************************************************************************/
 package de.dlr.sc.virsat.model.concept.types.structural;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -19,6 +20,8 @@ import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+
+import com.github.cliftonlabs.json_simple.JsonObject;
 
 import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
 import de.dlr.sc.virsat.model.concept.types.util.BeanCategoryAssignmentHelper;
@@ -265,5 +268,44 @@ public abstract class ABeanStructuralElementInstance implements IBeanStructuralE
 			return se.isIsRootStructuralElement();
 		}
 		return false;
+	}
+	
+	@Override
+	public JsonObject toJson() {
+		JsonObject obj = new JsonObject();
+		obj.put("uuid", sei.getUuid().toString());
+		obj.put("name", sei.getName());
+		obj.put("description", sei.getDescription());
+		obj.put("type", sei.getType().getFullQualifiedName());
+		obj.put("parent", sei.getParent() != null ? sei.getParent().getUuid().toString() : "null");
+		obj.put("superSeis", collectParentUuids());
+		obj.put("childSeis", collectChildUuids());
+		obj.put("categoryAssignments", collectCategoryAssignmentUuids());
+		
+		return obj;
+	}
+	
+	private List<String> collectParentUuids() {
+		List<String> uuids = new ArrayList<String>();
+		for (StructuralElementInstance superSei : sei.getSuperSeis()) {
+			uuids.add(superSei.getUuid().toString());
+		}
+		return uuids;
+	}
+	
+	private List<String> collectChildUuids() {
+		List<String> uuids = new ArrayList<String>();
+		for (StructuralElementInstance childSei : sei.getChildren()) {
+			uuids.add(childSei.getUuid().toString());
+		}
+		return uuids;
+	}
+	
+	private List<String> collectCategoryAssignmentUuids() {
+		List<String> uuids = new ArrayList<String>();
+		for (CategoryAssignment ca : sei.getCategoryAssignments()) {
+			uuids.add(ca.getUuid().toString());
+		}
+		return uuids;
 	}
 }
