@@ -13,6 +13,8 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
+import com.github.cliftonlabs.json_simple.JsonObject;
+
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.PropertyinstancesPackage;
 
 /**
@@ -35,5 +37,13 @@ public class BeanPropertyString extends ABeanProperty<String> {
 	@Override
 	public String getValue() {
 		return ti.getValue();
+	}
+
+	@Override
+	public JsonObject toJson() {
+		JsonObject obj = new JsonObject();
+		obj.put("uuid", getUuid());
+		obj.put("value", getValue());
+		return obj;
 	}
 }

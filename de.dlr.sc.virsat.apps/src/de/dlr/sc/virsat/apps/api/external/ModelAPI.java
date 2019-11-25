@@ -36,11 +36,26 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
 import de.dlr.sc.virsat.model.concept.types.factory.BeanCategoryAssignmentFactory;
 import de.dlr.sc.virsat.model.concept.types.factory.BeanStructuralElementInstanceFactory;
+import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyBoolean;
+import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyEnum;
+import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyFloat;
+import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyInt;
+import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyResource;
+import de.dlr.sc.virsat.model.concept.types.property.BeanPropertyString;
+import de.dlr.sc.virsat.model.concept.types.property.IBeanProperty;
 import de.dlr.sc.virsat.model.concept.types.structural.IBeanStructuralElementInstance;
 import de.dlr.sc.virsat.model.concept.types.util.BeanStructuralElementInstanceHelper;
 import de.dlr.sc.virsat.model.dvlm.DVLMPackage;
 import de.dlr.sc.virsat.model.dvlm.Repository;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
+import de.dlr.sc.virsat.model.dvlm.categories.propertydefinitions.BooleanProperty;
+import de.dlr.sc.virsat.model.dvlm.categories.propertydefinitions.EnumProperty;
+import de.dlr.sc.virsat.model.dvlm.categories.propertydefinitions.FloatProperty;
+import de.dlr.sc.virsat.model.dvlm.categories.propertydefinitions.IntProperty;
+import de.dlr.sc.virsat.model.dvlm.categories.propertydefinitions.ResourceProperty;
+import de.dlr.sc.virsat.model.dvlm.categories.propertydefinitions.StringProperty;
+import de.dlr.sc.virsat.model.dvlm.categories.propertydefinitions.util.PropertydefinitionsSwitch;
+import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.APropertyInstance;
 import de.dlr.sc.virsat.model.dvlm.concepts.Concept;
 import de.dlr.sc.virsat.model.dvlm.inheritance.InheritanceCopier;
 import de.dlr.sc.virsat.model.dvlm.roles.Discipline;
@@ -378,6 +393,54 @@ public class ModelAPI {
 			if (currentCA instanceof CategoryAssignment) {
 				if (((CategoryAssignment) currentCA).getUuid().toString().equals(uuid)) {
 					return (new BeanCategoryAssignmentFactory()).getInstanceFor((CategoryAssignment) currentCA);
+				}
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Find a {@link IBeanProperty} from a given UUID.
+	 * @param uuid UUID of {@link IBeanProperty} to find
+	 * @return {@link IBeanProperty} that belongs to the given UUID
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public IBeanProperty<APropertyInstance, ?> findBeanPropertyByUuid(String uuid) {
+		List<StructuralElementInstance> rootSeis = getRepository().getRootEntities();
+		TreeIterator<Object> iterator = EcoreUtil.getAllContents(rootSeis, true);
+		while (iterator.hasNext()) {
+			Object currentEntity = iterator.next();
+			if (currentEntity instanceof APropertyInstance) {
+				if (((APropertyInstance) currentEntity).getUuid().toString().equals(uuid)) {
+					APropertyInstance propertyInstance = (APropertyInstance) currentEntity;
+					IBeanProperty beanProperty = new PropertydefinitionsSwitch<IBeanProperty>() {
+						@Override
+						public IBeanProperty caseBooleanProperty(BooleanProperty object) {
+							return new BeanPropertyBoolean();
+						}
+						@Override
+						public IBeanProperty caseEnumProperty(EnumProperty object) {
+							return new BeanPropertyEnum();
+						}
+						@Override
+						public IBeanProperty caseFloatProperty(FloatProperty object) {
+							return new BeanPropertyFloat();
+						}
+						@Override
+						public IBeanProperty caseIntProperty(IntProperty object) {
+							return new BeanPropertyInt();
+						}
+						@Override
+						public IBeanProperty caseStringProperty(StringProperty object) {
+							return new BeanPropertyString();
+						};
+						@Override
+						public IBeanProperty caseResourceProperty(ResourceProperty object) {
+							return new BeanPropertyResource();
+						};
+					}.doSwitch(propertyInstance.getType());
+					beanProperty.setTypeInstance(propertyInstance);
+					return beanProperty;
 				}
 			}
 		}

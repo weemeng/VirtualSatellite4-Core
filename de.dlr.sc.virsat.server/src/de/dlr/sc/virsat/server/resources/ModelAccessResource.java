@@ -37,5 +37,12 @@ public class ModelAccessResource {
 	public String showCategoryAssignment(@QueryParam("projectdirectory") String projectdirectory,
 										 @QueryParam("uuid") String uuid) {
 		return ModelAccess.getInstance().showBeanCAFromUuid(projectdirectory, uuid);
-	}	
+	}
+	
+	@GET
+	@Path("/property")
+	public String showBeanProperty(@QueryParam("projectdirectory") String projectdirectory,
+										 @QueryParam("uuid") String uuid) {
+		return ModelAccess.getInstance().showBeanPropertyFromUuid(projectdirectory, uuid);
+	}
 }

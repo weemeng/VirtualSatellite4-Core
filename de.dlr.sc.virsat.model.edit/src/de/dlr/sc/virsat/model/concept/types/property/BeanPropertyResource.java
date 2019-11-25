@@ -18,6 +18,8 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
+import com.github.cliftonlabs.json_simple.JsonObject;
+
 import de.dlr.sc.virsat.model.concept.types.ABeanObject;
 import de.dlr.sc.virsat.model.dvlm.categories.CategoryAssignment;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.PropertyinstancesPackage;
@@ -110,5 +112,13 @@ public class BeanPropertyResource extends ABeanObject<ResourcePropertyInstance> 
 		}
 		
 		return null;
+	}
+
+	@Override
+	public JsonObject toJson() {
+		JsonObject obj = new JsonObject();
+		obj.put("uuid", getUuid());
+		obj.put("value", getValue());
+		return obj;
 	}
 }

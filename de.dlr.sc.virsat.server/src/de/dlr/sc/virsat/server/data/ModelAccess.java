@@ -18,6 +18,7 @@ import com.github.cliftonlabs.json_simple.JsonObject;
 
 import de.dlr.sc.virsat.apps.api.external.ModelAPI;
 import de.dlr.sc.virsat.model.concept.types.category.IBeanCategoryAssignment;
+import de.dlr.sc.virsat.model.concept.types.property.IBeanProperty;
 import de.dlr.sc.virsat.model.concept.types.structural.ABeanStructuralElementInstance;
 import de.dlr.sc.virsat.model.concept.types.structural.IBeanStructuralElementInstance;
 
@@ -101,6 +102,22 @@ public class ModelAccess {
 			e.printStackTrace();
 		}
 		
+		return result;
+	}
+	
+	/**
+	 * Gets the {@link IBeanProperty} from the given UUID and converty it to a json structure, which is then returned.
+	 * @param projectdirectory the directory of the local VirSat project (for context)
+	 * @param uuid the UUID for which the {@link IBeanProperty} is wanted
+	 * @return json string of the {@link IBeanProperty} that belongs to the given UUID
+	 */
+	public String showBeanPropertyFromUuid(String projectdirectory, String uuid) {
+		String result = "null";
+		
+		ModelAPI modelAPI = new ModelAPI(projectdirectory);
+		@SuppressWarnings("rawtypes")
+		IBeanProperty beanProperty = modelAPI.findBeanPropertyByUuid(uuid);
+		result = beanProperty.toJson().toJson();
 		return result;
 	}
 }

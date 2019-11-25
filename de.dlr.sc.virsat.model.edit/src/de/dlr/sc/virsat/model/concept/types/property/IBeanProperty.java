@@ -12,6 +12,8 @@ package de.dlr.sc.virsat.model.concept.types.property;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
+import com.github.cliftonlabs.json_simple.JsonObject;
+
 import de.dlr.sc.virsat.model.concept.types.IBeanObject;
 import de.dlr.sc.virsat.model.dvlm.categories.propertyinstances.APropertyInstance;
 
@@ -54,4 +56,10 @@ public interface IBeanProperty<P_TYPE extends APropertyInstance, V_TYPE> extends
 	 * Unsets the value of the bean property
 	 */
 	void unset();
+	
+	/**
+	 * Converts the content of the instance to json, similar to the {@link #toString()} method.
+	 * @return Content of instance as json object
+	 */
+	JsonObject toJson();
 }
