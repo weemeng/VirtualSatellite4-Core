@@ -19,14 +19,13 @@ Require-Bundle: org.eclipse.core.runtime,
  org.apache.commons.io,
  org.bouncycastle.bcpg,
  org.bouncycastle.bcprov,
- de.dlr.sc.virsat.apps,
- de.dlr.sc.virsat.model.extension.ps,
- de.dlr.sc.virsat.model.extension.tests
+ org.eclipse.core.resources,
+ de.dlr.sc.virsat.apps
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Eclipse-ExtensibleAPI: true
 Export-Package: de.dlr.sc.virsat.server,
- de.dlr.sc.virsat.server.data,
+ de.dlr.sc.virsat.server.dataaccess,
  de.dlr.sc.virsat.server.jetty,
  de.dlr.sc.virsat.server.resources
 Automatic-Module-Name: de.dlr.sc.virsat.server

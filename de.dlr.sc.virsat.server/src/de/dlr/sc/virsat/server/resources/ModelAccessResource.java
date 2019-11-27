@@ -14,7 +14,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
-import de.dlr.sc.virsat.server.data.ModelAccess;
+import de.dlr.sc.virsat.server.dataaccess.ModelAccess;
 
 @Path("/model")
 public class ModelAccessResource {
