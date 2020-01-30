@@ -166,6 +166,50 @@ Congratulations. You have successfully set up your Git integration!
 
 === Calculations
 
+== Headless REST Server
+
+Virtual Satellite provides a headless REST Server, that enables clients to access the modeled data without using the Virtual Satellite application / UI.
+
+=== Overview
+
+The Figure "<<RestServerOverview>>" gives an overview of the Server and its environment.
+
+.Overview of the Headless REST Server in the Virtual Satellite environment
+[#RestServerOverview]
+image::chapterHeadlessRestServer/REST_server_overview[Server Overview]
+
+A Server instance can maintain multiple repositories, with each repository connected to a git or SVN server.
+A repository has three components, that will later be described in detail.
+REST Clients can access the server using the HTTP commands GET, PUT, DELETE and POST. So a client can read or write into the Virtual Satellite model. 
+The connected SVN/git repositories can also be directly changed from Clients using Virtual Satellite UI.
+So the server needs to resolve these conflicts and also handle simultaneous changes from multiple REST clients.
+The SVN/git repository is supposed to be the single source of truth in those cases.
+For authentication purposes an LDAP server can be connected to the REST server.
+
+=== Components
+
+Figure "<<RestServerComponents>>" gives a more detailed view on the REST Server components.
+
+.Components of the Headless REST Server.
+[#RestServerComponents]
+image::chapterHeadlessRestServer/REST_server_components[Server Components]
+
+A REST Client can send a request to a specified repository, in which it get's handled in three Layers:
+
+In the Authentication Layer, the server checks if the Client is valid, either by using an external LDAP server or by basic HTTP authentication.
+If the client is not valid, the server responds with an access denied message.
+
+The Administrative Layer can be accessed by functional accounts. In it repositories can be managed.
+It also provides an infrastructure (e.g. private and public key pairs) to de- and encrypt messages.
+For that purpose, it uses a cryptography component that contains a keystore to secure and persistent save generated keys.
+
+Connected to the model is the SVN/git Client Layer, that accesses the connected SVN/git repository similar to a Virtual Satellite Client. 
+For that it uses versioning, a local working directory with a local copy of the connected repository and the Virtual Satellite ENF Model.
+That way it can use the same user role management, to check if a resource can be accessed by the Client.
+In this Layer the requested resources are accessed, parsed into the JSON format and returned to the previous layer.
+
+Finally, after encrypting the response containing the accessed resource, it is sent to the REST Client.
+
 == Advanced Development Topics
 
 Special topics are discussed in this chapter.
