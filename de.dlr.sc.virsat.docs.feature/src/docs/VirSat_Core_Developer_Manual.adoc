@@ -176,7 +176,7 @@ The Figure "<<RestServerOverview>>" gives an overview of the Server and its envi
 
 .Overview of the Headless REST Server in the Virtual Satellite environment
 [#RestServerOverview]
-image::chapterHeadlessRestServer/REST_server_overview[Server Overview]
+image::chapterHeadlessRestServer/REST_server_overview.png[Server Overview]
 
 A Server instance can maintain multiple repositories, with each repository connected to a git or SVN server.
 A repository has three components, that will later be described in detail.
@@ -192,7 +192,7 @@ Figure "<<RestServerComponents>>" gives a more detailed view on the REST Server 
 
 .Components of the Headless REST Server.
 [#RestServerComponents]
-image::chapterHeadlessRestServer/REST_server_components[Server Components]
+image::chapterHeadlessRestServer/REST_server_components.png[Server Components]
 
 A REST Client can send a request to a specified repository, in which it get's handled in three Layers:
 
