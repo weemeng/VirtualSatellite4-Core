@@ -10,6 +10,7 @@
 package de.dlr.sc.virsat.model.extension.tests.tests;
 
 import de.dlr.sc.virsat.model.dvlm.dmf.DObject;
+import de.dlr.sc.virsat.model.ext.core.core.GenericCategory;
 
 /**
  * <!-- begin-user-doc -->
@@ -21,5 +22,5 @@ import de.dlr.sc.virsat.model.dvlm.dmf.DObject;
  * @model abstract="true"
  * @generated
  */
-public interface TestCategoryBeanAbstract extends DObject {
+public interface TestCategoryBeanAbstract extends DObject, GenericCategory {
 } // TestCategoryBeanAbstract

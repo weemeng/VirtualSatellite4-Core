@@ -11,6 +11,7 @@ package de.dlr.sc.virsat.model.extension.tests.tests.impl;
 
 import de.dlr.sc.virsat.model.dvlm.dmf.impl.DObjectImpl;
 
+import de.dlr.sc.virsat.model.ext.core.core.GenericCategory;
 import de.dlr.sc.virsat.model.extension.tests.tests.TestCategoryBase;
 import de.dlr.sc.virsat.model.extension.tests.tests.TestCategoryExtends;
 import de.dlr.sc.virsat.model.extension.tests.tests.TestsPackage;
@@ -337,6 +338,11 @@ public class TestCategoryExtendsImpl extends DObjectImpl implements TestCategory
 	 */
 	@Override
 	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == GenericCategory.class) {
+			switch (derivedFeatureID) {
+				default: return -1;
+			}
+		}
 		if (baseClass == TestCategoryBase.class) {
 			switch (derivedFeatureID) {
 				case TestsPackage.TEST_CATEGORY_EXTENDS__TEST_ARRAY: return TestsPackage.TEST_CATEGORY_BASE__TEST_ARRAY;
@@ -355,6 +361,11 @@ public class TestCategoryExtendsImpl extends DObjectImpl implements TestCategory
 	 */
 	@Override
 	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == GenericCategory.class) {
+			switch (baseFeatureID) {
+				default: return -1;
+			}
+		}
 		if (baseClass == TestCategoryBase.class) {
 			switch (baseFeatureID) {
 				case TestsPackage.TEST_CATEGORY_BASE__TEST_ARRAY: return TestsPackage.TEST_CATEGORY_EXTENDS__TEST_ARRAY;

@@ -10,6 +10,7 @@
 package de.dlr.sc.virsat.model.extension.tests.tests;
 
 import de.dlr.sc.virsat.model.dvlm.dmf.DObject;
+import de.dlr.sc.virsat.model.ext.core.core.GenericCategory;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,7 +28,7 @@ import de.dlr.sc.virsat.model.dvlm.dmf.DObject;
  * @model
  * @generated
  */
-public interface TestCategoryComposition extends DObject {
+public interface TestCategoryComposition extends DObject, GenericCategory {
 	/**
 	 * Returns the value of the '<em><b>Test Sub Category</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

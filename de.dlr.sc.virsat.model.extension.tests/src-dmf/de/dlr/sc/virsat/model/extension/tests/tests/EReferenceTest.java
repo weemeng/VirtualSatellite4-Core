@@ -11,6 +11,7 @@ package de.dlr.sc.virsat.model.extension.tests.tests;
 
 import de.dlr.sc.virsat.model.dvlm.dmf.DObject;
 
+import de.dlr.sc.virsat.model.ext.core.core.GenericCategory;
 import de.dlr.sc.virsat.model.external.tests.ExternalTestType;
 
 /**
@@ -29,7 +30,7 @@ import de.dlr.sc.virsat.model.external.tests.ExternalTestType;
  * @model
  * @generated
  */
-public interface EReferenceTest extends DObject {
+public interface EReferenceTest extends DObject, GenericCategory {
 	/**
 	 * Returns the value of the '<em><b>EReference Test</b></em>' reference.
 	 * <!-- begin-user-doc -->
